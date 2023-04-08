@@ -1,26 +1,32 @@
-local cmd = vim.cmd             -- execute Vim commands
-local exec = vim.api.nvim_exec  -- execute Vimscript
-local g = vim.g                 -- global variables
-local opt = vim.opt             -- global/buffer/windows-scoped options
-g.mapleader = ';'
-cmd([[
+-- vim.cmd - execute Vim commands
+-- vim.api.nvim_exec - execute Vimscript
+-- vim.g - global variables
+-- vim.opt - global/buffer/windows-scoped options
+vim.g.mapleader = ' '
+vim.cmd([[
 syntax enable
 ]])
-opt.expandtab = true
-opt.shiftwidth = 2
-opt.tabstop = 2
-opt.softtabstop = 2
-opt.smartindent = true
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.smartindent = true
 
-opt.ignorecase = true
-opt.hlsearch = true
-opt.relativenumber = true
-opt.number = true
+vim.opt.scrolloff = 8
 
-opt.clipboard = 'unnamedplus'
+vim.opt.ignorecase = true
+vim.opt.hlsearch = true
+vim.opt.relativenumber = true
+vim.opt.number = true
+
+vim.opt.clipboard = 'unnamedplus'
 
 require('gitsigns').setup()
 require("keymaps")
 require("plugins")
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
+
+-- set transparent background
+vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg ="none" })
