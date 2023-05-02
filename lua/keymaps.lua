@@ -1,3 +1,7 @@
 vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("x", "<leader>p", "\"_dP")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<leader>o", "o<Esc>k")
+vim.keymap.set("n", "<leader>O", "O<Esc>j")
