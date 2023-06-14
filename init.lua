@@ -30,3 +30,10 @@ vim.cmd([[colorscheme gruvbox]])
 -- set transparent background
 vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg ="none" })
+
+vim.cmd([[
+  command Gpush Git pull --rebase | Git push
+  command Jq %!jq .
+  command Gw w | Gwrite
+  command Gwc w | Gwrite | Git commit
+]])
