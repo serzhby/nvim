@@ -24,6 +24,8 @@ vim.opt.clipboard = 'unnamedplus'
 require('gitsigns').setup()
 require("keymaps")
 require("plugins")
+require("telescope").load_extension("recent_files")
+require("telescope").load_extension("file_browser")
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
 
@@ -36,4 +38,5 @@ vim.cmd([[
   command Jq %!jq .
   command Gw w | Gwrite
   command Gwc w | Gwrite | Git commit
+  command Gconfig w | Gwrite | Git commit -m "feat(mx): config." | Git pull --rebase | Git push
 ]])
