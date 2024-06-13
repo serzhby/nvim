@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/sergey/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/sergey/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/sergey/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/sergey/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/sergey/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/home/sergey/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?.lua;/home/sergey/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?/init.lua;/home/sergey/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?.lua;/home/sergey/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/sergey/.cache/nvim/packer_hererocks/2.1.1713484068/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -164,6 +164,11 @@ _G.packer_plugins = {
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/sergey/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -174,6 +179,12 @@ _G.packer_plugins = {
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
+  ["oil.nvim"] = {
+    config = { "\27LJ\2\n1\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\boil\frequire\0" },
+    loaded = true,
+    path = "/home/sergey/.local/share/nvim/site/pack/packer/start/oil.nvim",
+    url = "https://github.com/stevearc/oil.nvim"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -183,6 +194,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["rest.nvim"] = {
+    loaded = true,
+    path = "/home/sergey/.local/share/nvim/site/pack/packer/start/rest.nvim",
+    url = "https://github.com/rest-nvim/rest.nvim"
   },
   ["telescope-file-browser.nvim"] = {
     loaded = true,
@@ -195,7 +211,7 @@ _G.packer_plugins = {
     url = "https://github.com/smartpde/telescope-recent-files"
   },
   ["telescope.nvim"] = {
-    config = { "\27LJ\2\2;\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\14telescope\frequire\0" },
+    config = { "\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14telescope\frequire\0" },
     loaded = true,
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
@@ -204,6 +220,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/sergey/.local/share/nvim/site/pack/packer/start/undotree",
     url = "https://github.com/mbbill/undotree"
+  },
+  ["vim-dadbod"] = {
+    loaded = true,
+    path = "/home/sergey/.local/share/nvim/site/pack/packer/start/vim-dadbod",
+    url = "https://github.com/tpope/vim-dadbod"
+  },
+  ["vim-dadbod-completion"] = {
+    loaded = true,
+    path = "/home/sergey/.local/share/nvim/site/pack/packer/start/vim-dadbod-completion",
+    url = "https://github.com/kristijanhusak/vim-dadbod-completion"
+  },
+  ["vim-dadbod-ui"] = {
+    loaded = true,
+    path = "/home/sergey/.local/share/nvim/site/pack/packer/start/vim-dadbod-ui",
+    url = "https://github.com/kristijanhusak/vim-dadbod-ui"
   },
   ["vim-fugitive"] = {
     loaded = true,
@@ -215,8 +246,12 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\2;\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\14telescope\frequire\0", "config", "telescope.nvim")
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14telescope\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
+-- Config for: oil.nvim
+time([[Config for oil.nvim]], true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\boil\frequire\0", "config", "oil.nvim")
+time([[Config for oil.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
