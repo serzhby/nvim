@@ -1,31 +1,56 @@
-vim.cmd [[packadd packer.nvim]]
+--vim.cmd [[packadd packer.nvim]]
 
-local packer = require('packer')
+--local packer = require('packer')
+local lazy = require("lazy")
 
-packer.init({
-  luarocks = {
-    python_cmd = 'python3'
-  }
-})
+local plugins = {
+  {
+    dir = "/home/sergey/code/ijhttp-nvim"
+  },
+  {
+      "vhyrro/luarocks.nvim",
+      priority = 1000,
+      config = true,
+  },
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require'telescope'.setup {}
+    end,
+  },
 
-return packer.startup(function()
-  use { 'wbthomason/packer.nvim' }
-
-  use { 'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'} },
-  config = function() require'telescope'.setup {} end, }
-
-  use { 'ellisonleao/gruvbox.nvim' }
-  use { 'lewis6991/gitsigns.nvim' }
-  use { 'tpope/vim-fugitive' }
-  use { 'idanarye/vim-merginal' }
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'theprimeagen/harpoon' }
-  use { 'mbbill/undotree' }
-  use {
+  { 'ellisonleao/gruvbox.nvim' },
+  { 'lewis6991/gitsigns.nvim' },
+  { 'tpope/vim-fugitive' },
+  { 'idanarye/vim-merginal' },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "java", "kotlin", "yaml", "http", "json", "graphql", "norg" },
+        sync_install = false,
+        -- Automatically install missing parsers when entering buffer
+        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+        auto_install = true,
+        highlight = {
+          enable = true,
+          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+          -- Using this option may slow down your editor, and you may see some duplicate highlights.
+          -- Instead of true it can also be a list of languages
+          additional_vim_regex_highlighting = false,
+        },
+      }
+    end
+  },
+  { 'theprimeagen/harpoon' },
+  { 'mbbill/undotree' },
+  {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
-    requires = {
+    dependencies = {
       --- Uncomment the two plugins below if you want to manage the language servers from neovim
       {'williamboman/mason.nvim'},
       {'williamboman/mason-lspconfig.nvim'},
@@ -35,78 +60,67 @@ return packer.startup(function()
       {'hrsh7th/cmp-nvim-lsp'},
       {'L3MON4D3/LuaSnip'},
     }
-  }
+  },
 
-  --use {
-  -- 'VonHeikemen/lsp-zero.nvim',
-  -- branch = 'v1.x',
-  -- requires = {
-  --   -- LSP Support
-  --   { 'neovim/nvim-lspconfig' },
-  --   { 'williamboman/mason.nvim' },
-  --   { 'williamboman/mason-lspconfig.nvim' },
-
-  --   -- Autocompletion
-  --   { 'hrsh7th/nvim-cmp' },
-  --   { 'hrsh7th/cmp-buffer' },
-  --   { 'hrsh7th/cmp-path' },
-  --   { 'saadparwaiz1/cmp_luasnip' },
-  --   { 'hrsh7th/cmp-nvim-lsp' },
-  --   { 'hrsh7th/cmp-nvim-lua' },
-
-  --   -- Snippets
-  --   { 'L3MON4D3/LuaSnip' },
-  --   { 'rafamadriz/friendly-snippets' },
-  -- }
-  --}
-  use { 'smartpde/telescope-recent-files' }
-  use { 'mfussenegger/nvim-dap' }
-  use { 'mfussenegger/nvim-jdtls' }
-  use { 'nvim-lua/plenary.nvim' }
-  use {
+  { 'smartpde/telescope-recent-files' },
+  { 'mfussenegger/nvim-dap' },
+  { 'mfussenegger/nvim-jdtls' },
+  { 'nvim-lua/plenary.nvim' },
+  {
       "nvim-telescope/telescope-file-browser.nvim",
-      requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-  }
-  use 'nvim-tree/nvim-tree.lua'
-  use 'nvim-tree/nvim-web-devicons'
-  use {
+      dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+  'nvim-tree/nvim-tree.lua',
+  'nvim-tree/nvim-web-devicons',
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-  }
-  use({
+    dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
+  },
+  {
     "stevearc/oil.nvim",
     config = function()
       require("oil").setup()
     end,
-  })
-  -- use { 'BlackLight/nvim-http' }
-  -- use {
-  --   "rest-nvim/rest.nvim",
-  --   rocks = { {"lua-curl", env = { CURL_INCDIR="/usr/include/x86_64-linux-gnu" } }, "nvim-nio", "mimetypes", "xml2lua" },
-  -- }
-
-  use {
+  },
+  {
     "tpope/vim-dadbod",
-    requires = {
+    dependencies = {
       "kristijanhusak/vim-dadbod-ui",
       "kristijanhusak/vim-dadbod-completion"
     },
-  }
+  },
 
-  use {
+  {
     "nvim-neorg/neorg",
-    rocks = { "lua-utils.nvim", "lua-utils", "nvim-nio", "nui.nvim", "plenary.nvim", "pathlib.nvim" },
-    tag = "v8.7.1", -- Pin Neorg to the latest stable release
-    ft = "norg",
-    cmd = "Neorg",
+    run = ":Neorg sync-parsers",
+    dependencies = { "luarocks.nvim", "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
+    lazy = false,
+    --ft = 'norg',
     config = function()
-      print('Setup called')
       require("neorg").setup({
         load = {
           ["core.defaults"] = {},
-          ["core.concealer"] = {}
+          ["core.concealer"] = {},
+          ["core.integrations.treesitter"] = {}
         }
       })
+    end,
+  },
+
+  {
+    'pwntester/octo.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      -- OR 'ibhagwan/fzf-lua',
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function ()
+      require"octo".setup()
     end
   }
-end)
+
+}
+
+
+lazy.setup(plugins)

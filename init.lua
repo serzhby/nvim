@@ -23,10 +23,27 @@ vim.opt.number = true
 
 vim.opt.clipboard = 'unnamedplus'
 
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
 require("plugins")
 require("keymaps")
 require("ijhttp-nvim").setup({
-  ijhttp_path = "/home/sergey/dev/ijhttp/ijhttp"
+  ijhttp_path = "/home/sergey/dev/ijhttp/ijhttp",
+  project_config_file_name = ".ijhttp.project",
+  root_dir_name = ".ijhttp",
+  env_file_name = "http-client.env.json",
+  env_warn = {"prod"}
 })
 require("gitsigns").setup()
 require("telescope").load_extension("recent_files")
@@ -39,7 +56,15 @@ require("telescope").setup {
     }
   }
 }
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+  renderer = {
+    group_empty = true
+  },
+  view = {
+    preserve_window_proportions = true,
+    width = 60
+  }
+})
 --require("nvim-http")
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
@@ -53,8 +78,6 @@ vim.g.db_ui_save_location = "/home/sergey/.config/nvim/db_ui"
 vim.cmd([[
   command Gpush Git pull --rebase | Git push
   command Jq %!jq .
-  command Gw w | Gwrite
   command Gwc w | Gwrite | Git commit
   command Gconfig w | Gwrite | Git commit -m "feat(mx): config." | Git pull --rebase | Git push
 ]])
-
