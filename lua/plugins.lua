@@ -1,6 +1,3 @@
---vim.cmd [[packadd packer.nvim]]
-
---local packer = require('packer')
 local lazy = require("lazy")
 
 local plugins = {
@@ -16,12 +13,23 @@ local plugins = {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require'telescope'.setup {}
+      require'telescope'.setup {
+        pickers = {
+          find_files = {
+            hidden = false
+          }
+        }
+      }
     end,
   },
 
   { 'ellisonleao/gruvbox.nvim' },
-  { 'lewis6991/gitsigns.nvim' },
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require("gitsigns").setup {}
+    end
+  },
   { 'tpope/vim-fugitive' },
   { 'idanarye/vim-merginal' },
   {
@@ -45,8 +53,8 @@ local plugins = {
       }
     end
   },
-  { 'theprimeagen/harpoon' },
-  { 'mbbill/undotree' },
+  --{ 'theprimeagen/harpoon' },
+  --{ 'mbbill/undotree' },
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
@@ -62,7 +70,7 @@ local plugins = {
     }
   },
 
-  { 'smartpde/telescope-recent-files' },
+  -- { 'smartpde/telescope-recent-files' },
   { 'mfussenegger/nvim-dap' },
   { 'mfussenegger/nvim-jdtls' },
   { 'nvim-lua/plenary.nvim' },
@@ -70,7 +78,7 @@ local plugins = {
       "nvim-telescope/telescope-file-browser.nvim",
       dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
-  'nvim-tree/nvim-tree.lua',
+  --'nvim-tree/nvim-tree.lua',
   'nvim-tree/nvim-web-devicons',
   {
     'nvim-lualine/lualine.nvim',
@@ -82,13 +90,13 @@ local plugins = {
       require("oil").setup()
     end,
   },
-  {
-    "tpope/vim-dadbod",
-    dependencies = {
-      "kristijanhusak/vim-dadbod-ui",
-      "kristijanhusak/vim-dadbod-completion"
-    },
-  },
+  --{
+  --  "tpope/vim-dadbod",
+  --  dependencies = {
+  --    "kristijanhusak/vim-dadbod-ui",
+  --    "kristijanhusak/vim-dadbod-completion"
+  --  },
+  --},
 
   {
     "nvim-neorg/neorg",
@@ -112,7 +120,6 @@ local plugins = {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
-      -- OR 'ibhagwan/fzf-lua',
       'nvim-tree/nvim-web-devicons',
     },
     config = function ()

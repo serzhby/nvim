@@ -2,9 +2,7 @@
 -- vim.g - global variables
 -- vim.opt - global/buffer/windows-scoped options
 vim.g.mapleader = ' '
-vim.cmd([[
-syntax enable
-]])
+vim.cmd([[syntax enable]])
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -37,6 +35,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("plugins")
+
 require("keymaps")
 require("ijhttp-nvim").setup({
   ijhttp_path = "/home/sergey/dev/ijhttp/ijhttp",
@@ -45,27 +44,7 @@ require("ijhttp-nvim").setup({
   env_file_name = "http-client.env.json",
   env_warn = {"prod"}
 })
-require("gitsigns").setup()
-require("telescope").load_extension("recent_files")
 require("telescope").load_extension("file_browser")
--- require("telescope").load_extension("rest")
-require("telescope").setup {
-  pickers = {
-    find_files = {
-      hidden = false
-    }
-  }
-}
-require("nvim-tree").setup({
-  renderer = {
-    group_empty = true
-  },
-  view = {
-    preserve_window_proportions = true,
-    width = 60
-  }
-})
---require("nvim-http")
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
 
@@ -73,7 +52,7 @@ vim.cmd([[colorscheme gruvbox]])
 vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg ="none" })
 
-vim.g.db_ui_save_location = "/home/sergey/.config/nvim/db_ui"
+-- vim.g.db_ui_save_location = "/home/sergey/.config/nvim/db_ui"
 
 vim.cmd([[
   command Gpush Git pull --rebase | Git push
