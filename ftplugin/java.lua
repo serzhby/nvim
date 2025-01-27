@@ -52,7 +52,7 @@ local config = {
   flags = {
     debounce_text_changes = 80,
   },
-  on_attach = on_attach,  -- We pass our on_attach keybindings to the configuration map
+  -- on_attach = on_attach,  -- We pass our on_attach keybindings to the configuration map
   root_dir = root_dir, -- Set the root directory to our found root_marker
   -- Here you can configure eclipse.jdt.ls specific settings
   -- These are defined by the eclipse.jdt.ls project and will be passed to eclipse when starting.
@@ -116,12 +116,8 @@ local config = {
         runtimes = {
           {
             name = "JavaSE-17",
-            path = home .. "/home/sergey/.sdkman/candidates/java/17.0.8-oracle",
-          },
-          {
-            name = "JavaSE-20",
-            path = home .. "/home/sergey/.sdkman/candidates/java/20.0.2-oracle",
-          },
+            path = home .. "/dev/jdk17",
+          }
         }
       }
     }
@@ -132,7 +128,7 @@ local config = {
   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   -- for the full list of options
   cmd = {
-    "/home/sergey/.sdkman/candidates/java/current/bin/java",
+    home .. "/dev/jdk17/bin/java",
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -147,11 +143,11 @@ local config = {
 
     -- The jar file is located where jdtls was installed. This will need to be updated
     -- to the location where you installed jdtls
-    '-jar', vim.fn.glob('/home/sergey/dev/eclipse-jdt-ls/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar'),
+    '-jar', vim.fn.glob(home .. "/dev/jdtls/share/java/jdtls/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar"),
 
     -- The configuration for jdtls is also placed where jdtls was installed. This will
     -- need to be updated depending on your environment
-    '-configuration', '/home/sergey/dev/eclipse-jdt-ls/config_linux',
+    '-configuration', home .. "/dev/jdtls-config",
 
     -- Use the workspace_folder defined above to store data for this project
     '-data', workspace_folder,

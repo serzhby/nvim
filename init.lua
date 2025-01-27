@@ -2,7 +2,7 @@
 -- vim.g - global variables
 -- vim.opt - global/buffer/windows-scoped options
 vim.g.mapleader = ' '
-vim.cmd([[syntax enable]])
+-- vim.cmd([[syntax enable]])
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -15,6 +15,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.scrolloff = 8
 
 vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.relativenumber = true
 vim.opt.number = true
@@ -38,13 +39,14 @@ require("plugins")
 
 require("keymaps")
 require("ijhttp-nvim").setup({
-  ijhttp_path = "/home/sergey/dev/ijhttp/ijhttp",
+  ijhttp_path = "ijhttp",
   project_config_file_name = ".ijhttp.project",
   root_dir_name = ".ijhttp",
   env_file_name = "http-client.env.json",
   env_warn = {"prod"}
 })
 require("telescope").load_extension("file_browser")
+
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
 
@@ -60,3 +62,4 @@ vim.cmd([[
   command Gwc w | Gwrite | Git commit
   command Gconfig w | Gwrite | Git commit -m "feat(mx): config." | Git pull --rebase | Git push
 ]])
+
