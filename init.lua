@@ -38,13 +38,21 @@ vim.opt.rtp:prepend(lazypath)
 require("plugins")
 
 require("keymaps")
-require("ijhttp-nvim").setup({
-  ijhttp_path = "ijhttp",
-  project_config_file_name = ".ijhttp.project",
-  root_dir_name = ".ijhttp",
-  env_file_name = "http-client.env.json",
-  env_warn = {"prod"}
-})
+-- require("ijhttp-nvim").setup({
+--   ijhttp_path = "ijhttp",
+--   project_config_file_name = ".ijhttp.project",
+--   root_dir_name = ".ijhttp",
+--   env_file_name = "http-client.env.json",
+--   env_warn = {"prod"}
+-- })
+
+vim.g.rest_nvim = {
+  ui = {
+    winbar = true
+  }
+}
+require("telescope").load_extension("rest")
+
 require("telescope").load_extension("file_browser")
 
 vim.o.background = "dark"

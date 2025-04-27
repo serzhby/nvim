@@ -1,9 +1,9 @@
 local lazy = require("lazy")
 
 local plugins = {
-  {
-    dir = "/home/sergey/code/ijhttp-nvim"
-  },
+  -- {
+  --   dir = "/home/sergey/code/ijhttp-nvim"
+  -- },
   {
       "vhyrro/luarocks.nvim",
       priority = 1000,
@@ -102,9 +102,11 @@ local plugins = {
   {
     "nvim-neorg/neorg",
     run = ":Neorg sync-parsers",
-    dependencies = { "luarocks.nvim", "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
+    -- dependencies = { "luarocks.nvim", "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
     lazy = false,
+    version = "*",
     ft = "norg",
+    -- config = true,
     config = function()
       require("neorg").setup({
         load = {
@@ -116,17 +118,17 @@ local plugins = {
     end,
   },
 
-  {
-    'pwntester/octo.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function ()
-      require"octo".setup()
-    end
-  },
+  -- {
+  --   'pwntester/octo.nvim',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-telescope/telescope.nvim',
+  --     'nvim-tree/nvim-web-devicons',
+  --   },
+  --   config = function ()
+  --     require"octo".setup()
+  --   end
+  -- },
 
   {
     "kdheepak/lazygit.nvim",
@@ -147,6 +149,44 @@ local plugins = {
     keys = {
         { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     }
+  },
+
+  {
+    "rest-nvim/rest.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      opts = function (_, opts)
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "http")
+      end,
+    }
+  },
+  {
+    "jemag/telescope-diff.nvim",
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
+    }
+  },
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      strategies = {
+        -- Change the default chat adapter
+        chat = {
+          adapter = "copilot",
+        },
+        inline = {
+          adapter = "copilot",
+        },
+      }
+    }
+  },
+  {
+    "github/copilot.vim"
   }
 
 }

@@ -11,6 +11,8 @@ vim.keymap.set("n", "<leader>e", "<cmd>Telescope oldfiles<CR>", {noremap=true, s
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>h", "<cmd>Telescope help_tags<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>m", "<cmd>messages<CR>", {noremap=true})
+vim.keymap.set("n", "<leader>re", [[<cmd>lua require('telescope').extensions.rest.select_env()<CR>]], {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>d", [[<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<CR>]], {noremap = true, silent = true})
 -- vim.keymap.set("n", "<leader>n", "<cmd>NvimTreeOpen<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>-", "<cmd>Oil<CR>", {noremap=true})
 --vim.keymap.set("n", "<leader>rr", "<cmd>Rest run<CR>", {noremap=true})
@@ -20,6 +22,7 @@ vim.keymap.set("n", "<leader>-", "<cmd>Oil<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>opl", "<cmd>Octo pr list<CR>", {noremap=true})
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", {noremap=true})
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>", {noremap=true})
+vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", {noremap=true})
 
 
 local function run_file()
@@ -33,7 +36,8 @@ local function run_file()
   elseif ft == "python" then
     cmd = "!python3 %"
   elseif ft == "http" then
-    cmd = "Ijhttp run"
+    cmd = "vertical botright Rest run"
+    --   cmd = "Ijhttp run"
   else
     vim.notify("No run command defined for file type: " .. ft, vim.log.levels.WARN)
     return

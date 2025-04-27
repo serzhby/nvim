@@ -44,39 +44,70 @@ cmp.setup({
   },
 })
 
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {"lua_ls", "groovyls", "html"},
-  handlers = {
-    function(server_name)
-      if server_name == 'lua_ls' then
-        require('lspconfig').lua_ls.setup({
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = {'vim', 'use'}
-              }
-            }
-          }
-        })
-      elseif server_name == 'groovyls' then
-        require('lspconfig').groovyls.setup({
-          cmd = { "/home/sergey/dev/jdk17/bin/java", "-jar", "/home/sergey/dev/groovy-language-server-all.jar" },
-        })
-      elseif server_name == 'html' then
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities.textDocument.completion.completionItem.snippetSupport = true
-        require('lspconfig').html.setup({
-          cmd = { "vscode-html-language-server", "--stdio" },
-          filetypes = { "html", "templ" },
-          capabilities = capabilities
-        })
-      else
-        require('lspconfig')[server_name].setup({})
-      end
-    end,
-  },
-})
+-- require('mason').setup({})
+-- require('mason-lspconfig').setup({
+--   ensure_installed = {"lua_ls", "groovyls", "html", "pyright", "bashls"},
+--   handlers = {
+--     function(server_name)
+--       if server_name == 'lua_ls' then
+--         require('lspconfig').lua_ls.setup({
+--           cmd = { "lua-language-server" };
+--           settings = {
+--             Lua = {
+--               diagnostics = {
+--                 globals = {'vim', 'use'}
+--               }
+--             }
+--           }
+--         })
+--       elseif server_name == 'groovyls' then
+--         require('lspconfig').groovyls.setup({
+--           cmd = { "/home/sergey/dev/jdk17/bin/java", "-jar", "/home/sergey/dev/groovy-language-server-all.jar" },
+--         })
+--       elseif server_name == 'pyright' then
+--         require('lspconfig').pyright.setup({})
+--       elseif server_name == 'bashls' then
+--         require('lspconfig').bashls.setup({})
+--       elseif server_name == 'html' then
+--         local capabilities = vim.lsp.protocol.make_client_capabilities()
+--         capabilities.textDocument.completion.completionItem.snippetSupport = true
+--         require('lspconfig').html.setup({
+--           cmd = { "vscode-html-language-server", "--stdio" },
+--           filetypes = { "html", "templ" },
+--           capabilities = capabilities
+--         })
+--       else
+--         require('lspconfig')[server_name].setup({})
+--       end
+--     end,
+--   },
+-- })
 require('lspconfig').nixd.setup({})
+
+require('lspconfig').lua_ls.setup({
+  cmd = { "lua-language-server" };
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = {'vim', 'use'}
+      }
+    }
+  }
+})
+
+
+require('lspconfig').groovyls.setup({
+  cmd = { "/home/sergey/dev/jdk17/bin/java", "-jar", "/home/sergey/dev/groovy-language-server-all.jar" },
+})
+require('lspconfig').pyright.setup({})
+require('lspconfig').bashls.setup({})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+require('lspconfig').html.setup({
+  cmd = { "vscode-html-language-server", "--stdio" },
+  filetypes = { "html", "templ" },
+  capabilities = capabilities
+})
+--require('lspconfig')[server_name].setup({})
 
 lsp.setup()
