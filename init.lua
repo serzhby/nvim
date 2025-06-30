@@ -71,3 +71,9 @@ vim.cmd([[
   command Gconfig w | Gwrite | Git commit -m "feat(mx): config." | Git pull --rebase | Git push
 ]])
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "json",
+  callback = function()
+    vim.opt_local.formatprg = "jq ."
+  end,
+})

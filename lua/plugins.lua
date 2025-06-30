@@ -1,5 +1,20 @@
 local lazy = require("lazy")
 
+local function combine(...)
+  local result = {}
+  for _, tbl in ipairs({ ... }) do
+    if type(tbl) == "table" then
+      for _, item in ipairs(tbl) do
+        table.insert(result, item)
+      end
+    else
+      table.insert(result, tbl)
+    end
+  end
+
+  return result
+end
+
 local plugins = {
   -- {
   --   dir = "/home/sergey/code/ijhttp-nvim"
@@ -23,15 +38,6 @@ local plugins = {
     end,
   },
 
-  { 'ellisonleao/gruvbox.nvim' },
-  {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require("gitsigns").setup {}
-    end
-  },
-  { 'tpope/vim-fugitive' },
-  { 'idanarye/vim-merginal' },
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -79,25 +85,6 @@ local plugins = {
       "nvim-telescope/telescope-file-browser.nvim",
       dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
-  --'nvim-tree/nvim-tree.lua',
-  'nvim-tree/nvim-web-devicons',
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
-  },
-  {
-    "stevearc/oil.nvim",
-    config = function()
-      require("oil").setup()
-    end,
-  },
-  --{
-  --  "tpope/vim-dadbod",
-  --  dependencies = {
-  --    "kristijanhusak/vim-dadbod-ui",
-  --    "kristijanhusak/vim-dadbod-completion"
-  --  },
-  --},
 
   {
     "nvim-neorg/neorg",
@@ -187,9 +174,69 @@ local plugins = {
   },
   {
     "github/copilot.vim"
-  }
+  },
+  {
+    "PedramNavid/dbtpal",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+    },
+    ft = {
+        "sql",
+        "md",
+        "yaml",
+    },
+    keys = {
+        { "<leader>drf", "<cmd>DbtRun<cr>" },
+        { "<leader>drp", "<cmd>DbtRunAll<cr>" },
+        { "<leader>dtf", "<cmd>DbtTest<cr>" },
+        { "<leader>dm", "<cmd>lua require('dbtpal.telescope').dbt_picker()<cr>" },
+    },
+    config = function()
+        require("dbtpal").setup({
+            path_to_dbt = "dbt",
+            path_to_dbt_project = "",
+            path_to_dbt_profiles_dir = vim.fn.expand("~/.dbt"),
+            include_profiles_dir = true,
+            include_project_dir = true,
+            include_log_level = true,
+            extended_path_search = true,
+            protect_compiled_files = true,
+            pre_cmd_args = {},
+            post_cmd_args = {},
+        })
+        require("telescope").load_extension("dbtpal")
+    end,
+  },
 
+  --{
+  --  'akinsho/toggleterm.nvim',
+  --  version = "*",
+  --  config = function()
+  --    require("toggleterm").setup {
+  --      size = 20,
+  --      open_mapping = [[<C-\>]],
+  --      hide_numbers = true, -- hide the number column in toggleterm buffers
+  --      shade_filetypes = {},
+  --      shade_terminals = true,
+  --      shading_factor = 2, -- the degree by which to darken to terminal colour, default: -30
+  --      start_in_insert = true,
+  --      insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  --      persist_size = true,
+  --      direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+  --      close_on_exit = true, -- close the terminal window when the process exits
+  --      shell = vim.o.shell, -- change the default shell
+  --    }
+  --  end,
+  --  opts = {--[[ things you want to change go here]]}
+  --}
 }
 
+local combined = combine(
+  plugins,
+  require("look-and-feel"),
+  require("git"),
+  require("database")
+)
 
-lazy.setup(plugins)
+lazy.setup(combined)

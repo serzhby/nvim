@@ -19,11 +19,11 @@ vim.keymap.set("n", "<leader>-", "<cmd>Oil<CR>", {noremap=true})
 -- vim.keymap.set("n", "<leader>re", [[<cmd>lua require('telescope').extensions.rest.select_env()<CR>]], {noremap=true})
 -- vim.keymap.set("n", "<leader>r", "<cmd>Http<CR>", {noremap=true})
 -- vim.keymap.set("n", "<leader>r", "<cmd>Ij<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>opl", "<cmd>Octo pr list<CR>", {noremap=true})
+vim.keymap.set("n", "<leader>gpl", "<cmd>Octo pr list<CR>", {noremap=true})
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", {noremap=true})
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", {noremap=true})
-
+--vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", {noremap=true})
 
 local function run_file()
   local ft = vim.bo.filetype -- Get the file type of the current buffer
@@ -48,3 +48,7 @@ end
 
 -- vim.keymap.set("n", "<leader>rr", "<cmd>Ijhttp run<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>rr", run_file, {noremap=true, silent=true, desc="Run current file"})
+
+--local function compare_with_clipboard()
+--end
+--vim.keymap.set("n", "<leader>cd", compare_with_clipboard, {noremap=true, silent=true, desc="Compare with clipboard"})
