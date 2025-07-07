@@ -38,13 +38,6 @@ vim.opt.rtp:prepend(lazypath)
 require("plugins")
 
 require("keymaps")
--- require("ijhttp-nvim").setup({
---   ijhttp_path = "ijhttp",
---   project_config_file_name = ".ijhttp.project",
---   root_dir_name = ".ijhttp",
---   env_file_name = "http-client.env.json",
---   env_warn = {"prod"}
--- })
 
 vim.g.rest_nvim = {
   ui = {
@@ -56,7 +49,7 @@ require("telescope").load_extension("rest")
 require("telescope").load_extension("file_browser")
 
 vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+-- vim.cmd([[colorscheme gruvbox]])
 
 -- set transparent background
 vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
@@ -77,3 +70,5 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.formatprg = "jq ."
   end,
 })
+
+

@@ -23,6 +23,7 @@ vim.keymap.set("n", "<leader>gpl", "<cmd>Octo pr list<CR>", {noremap=true})
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", {noremap=true})
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", {noremap=true})
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", {noremap=true})
 --vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", {noremap=true})
 
 local function run_file()
