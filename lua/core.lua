@@ -17,7 +17,9 @@ return {
     lazy = false,
     config = function()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "java", "kotlin", "yaml", "http", "json", "graphql", "norg", "toml", "python" },
+        ensure_installed = {
+          "c", "lua", "vim", "vimdoc", "query", "java", "kotlin", "yaml", "http", "json", "graphql", "norg", "toml", "python", "bash", "regex", "markdown", "sql"
+        },
         sync_install = false,
         auto_install = false,
         highlight = {
@@ -169,5 +171,27 @@ return {
         desc = "Quickfix List (Trouble)",
       },
     },
-  }
+  },
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    opts = {
+      completions = {
+        lsp = {
+          enabled = true
+        }
+      }
+    },
+    ft = { 'markdown', 'md', 'codecompanion' },
+  },
+  {
+    'echasnovski/mini.nvim',
+    version = false,
+    config = function()
+      require('mini.snippets').setup()
+      require('mini.completion').setup()
+      require('mini.diff').setup()
+    end
+  },
 }
