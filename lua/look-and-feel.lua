@@ -89,6 +89,7 @@ return {
       -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+      vim.keymap.set('n', '<leader>zz', require('ufo').setup)
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.foldingRange = {
@@ -103,7 +104,7 @@ return {
           })
       end
 
-      require('ufo').setup()
+      -- require('ufo').setup()
     end
   },
   {
