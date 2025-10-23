@@ -56,12 +56,13 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
       dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
-
   {
     "rest-nvim/rest.nvim",
     lazy = true,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
+      "j-hui/fidget.nvim",
+      "nvim-neotest/nvim-nio",
       opts = function (_, opts)
         opts.ensure_installed = opts.ensure_installed or {}
         table.insert(opts.ensure_installed, "http")

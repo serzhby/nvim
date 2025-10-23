@@ -25,4 +25,9 @@ local combined = combine(
   require("code-assistant")
 )
 
-lazy.setup(combined)
+lazy.setup(combined, {
+  rocks = {
+    -- required by rest.nvim until the issue https://github.com/rest-nvim/rest.nvim/issues/559 is fixed.
+    server = "https://lumen-oss.github.io/rocks-binaries/",
+  },
+})
