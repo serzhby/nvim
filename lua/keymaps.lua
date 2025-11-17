@@ -26,6 +26,15 @@ vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>at", "<cmd>CodeCompanionChat Toggle<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionActions<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", {noremap=true})
+vim.keymap.set("x", "<leader>gl", function()
+  local s = vim.fn.line("'<")
+  local e = vim.fn.line("'>")
+  -- % = current file
+  vim.cmd(string.format("Gclog -L%d,%d:%%", s, e))
+  -- optional: open quickfix list with the commits
+  vim.cmd("copen")
+end, { desc = "Git history for selection (Fugitive)" })
+
 --vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", {noremap=true})
 --
 vim.keymap.set('n', '<leader>gd', function()
