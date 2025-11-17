@@ -7,15 +7,17 @@ return {
     },
     opts = {
       adapters = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "claude-sonnet-4",
+        http = {
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-sonnet-4",
+                },
               },
-            },
-          })
-        end,
+            })
+          end,
+        };
       };
       strategies = {
         -- Change the default chat adapter

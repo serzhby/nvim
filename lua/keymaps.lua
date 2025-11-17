@@ -27,6 +27,21 @@ vim.keymap.set("n", "<leader>at", "<cmd>CodeCompanionChat Toggle<CR>", {noremap=
 vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionActions<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", {noremap=true})
 --vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", {noremap=true})
+--
+vim.keymap.set('n', '<leader>gd', function()
+  if vim.wo.diff then
+    -- Turn off diff mode in all windows
+    vim.cmd('diffoff!')
+    vim.cmd('only')
+  else
+    -- Start fugitive diff split (if available)
+    local ok, _ = pcall(vim.cmd, 'Gvdiffsplit')
+    if not ok then
+      -- Fallback: enable diff mode manually
+      vim.cmd('diffthis')
+    end
+  end
+end, { desc = 'Toggle Git diff view' })
 
 local function run_file()
   local ft = vim.bo.filetype -- Get the file type of the current buffer

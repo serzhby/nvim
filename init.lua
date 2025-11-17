@@ -67,8 +67,14 @@ vim.cmd([[
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "json",
   callback = function()
-    vim.opt_local.formatprg = "jq ."
+    vim.bo.equalprg = "jq ."
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "xml",
+  callback = function()
+    vim.bo.equalprg = "xmllint --format -"
+  end,
+})
 
