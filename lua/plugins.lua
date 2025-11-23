@@ -21,7 +21,7 @@ local combined = combine(
   require("git"),
   require("database"),
   require("files"),
-  require("neorg-notes"),
+  -- require("neorg-notes"),
   require("code-assistant")
 )
 
