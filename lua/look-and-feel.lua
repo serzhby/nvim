@@ -1,11 +1,38 @@
 return {
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- load the colorscheme here
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end,
+  -- },
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- load the colorscheme here
+  --     vim.cmd([[colorscheme kanagawa]])
+  --   end,
+  -- },
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- load the colorscheme here
+  --     vim.cmd([[colorscheme tokyonight]])
+  --   end,
+  -- },
   {
-    'ellisonleao/gruvbox.nvim',
+    'catppuccin/nvim',
     lazy = false,
     priority = 1000,
     config = function()
       -- load the colorscheme here
-      vim.cmd([[colorscheme gruvbox]])
+      vim.cmd([[colorscheme catppuccin]])
     end,
   },
   {

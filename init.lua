@@ -49,7 +49,6 @@ require("telescope").load_extension("rest")
 require("telescope").load_extension("file_browser")
 
 vim.o.background = "dark"
--- vim.cmd([[colorscheme gruvbox]])
 
 -- set transparent background
 vim.api.nvim_set_hl(0, "Normal", { bg ="none" })

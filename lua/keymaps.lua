@@ -2,7 +2,7 @@
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>e", "<cmd>Telescope oldfiles<CR>", {noremap=true, silent=true})
-vim.keymap.set("n", "<leader>b", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", {noremap=true})
+vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", {noremap=true})
 vim.keymap.set("n", "<leader>h", "<cmd>Telescope help_tags<CR>", {noremap=true})
 vim.keymap.set("x", "<leader>p", "\"_dP")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
