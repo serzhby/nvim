@@ -35,6 +35,8 @@ vim.keymap.set("x", "<leader>gl", function()
   -- optional: open quickfix list with the commits
   vim.cmd("copen")
 end, { desc = "Git history for selection (Fugitive)" })
+vim.keymap.set("n", "<leader>ntt", "<cmd>Neotree toggle<CR>", {noremap=true, silent=true, desc="Toggle Neotree"})
+vim.keymap.set("n", "<leader>ntf", "<cmd>Neotree focus<CR>", {noremap=true, silent=true, desc="Focus Neotree"})
 
 --vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", {noremap=true})
 --

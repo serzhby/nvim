@@ -2,11 +2,13 @@ vim.lsp.enable("nixd")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("groovyls")
 vim.lsp.enable("kotlin")
+vim.lsp.enable("javascript")
 vim.lsp.enable("pyright")
 vim.lsp.enable('bashls')
 vim.lsp.enable("html")
 vim.lsp.enable("tinymist")
 vim.lsp.enable("docker")
+vim.lsp.enable("json")
 vim.opt.completeopt = {'menu', 'menuone', 'noinsert', 'noselect'}
 
 vim.diagnostic.config({

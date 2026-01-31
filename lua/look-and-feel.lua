@@ -1,13 +1,13 @@
 return {
-  -- {
-  --   'ellisonleao/gruvbox.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     -- load the colorscheme here
-  --     vim.cmd([[colorscheme gruvbox]])
-  --   end,
-  -- },
+  {
+    'ellisonleao/gruvbox.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- load the colorscheme here
+      vim.cmd([[colorscheme gruvbox]])
+    end,
+  },
   -- {
   --   'rebelot/kanagawa.nvim',
   --   lazy = false,
@@ -26,15 +26,15 @@ return {
   --     vim.cmd([[colorscheme tokyonight]])
   --   end,
   -- },
-  {
-    'catppuccin/nvim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      -- load the colorscheme here
-      vim.cmd([[colorscheme catppuccin]])
-    end,
-  },
+  --{
+  --  'catppuccin/nvim',
+  --  lazy = false,
+  --  priority = 1000,
+  --  config = function()
+  --    -- load the colorscheme here
+  --    vim.cmd([[colorscheme catppuccin]])
+  --  end,
+  --},
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -134,13 +134,14 @@ return {
       -- require('ufo').setup()
     end
   },
+
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true },
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'horizon',
+        theme = 'gruvbox',
         component_separators = { left = '', right = ''},
         section_separators = { left = '', right = ''},
         disabled_filetypes = {
@@ -162,11 +163,10 @@ return {
         lualine_c = {'filename'},
         lualine_x = {
           {
-            "ijhttp",
+            "rest",
             icon = "",
             fg = "#428890"
           },
-          --'fileformat', 
           'filetype'
         },
         lualine_y = {'progress'},
@@ -186,6 +186,7 @@ return {
       extensions = {}
     }
   },
+
   {
     'nvim-mini/mini.comment',
     version = false ,
