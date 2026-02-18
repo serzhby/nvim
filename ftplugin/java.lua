@@ -115,8 +115,8 @@ local config = {
       configuration = {
         runtimes = {
           {
-            name = "JavaSE-17",
-            path = home .. "/dev/jdk17",
+            name = "JavaSE-21",
+            path = home .. "/dev/jdk21",
           }
         }
       }
@@ -128,7 +128,7 @@ local config = {
   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   -- for the full list of options
   cmd = {
-    home .. "/dev/jdk17/bin/java",
+    home .. "/dev/jdk21/bin/java",
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -143,7 +143,7 @@ local config = {
 
     -- The jar file is located where jdtls was installed. This will need to be updated
     -- to the location where you installed jdtls
-    '-jar', vim.fn.glob(home .. "/dev/jdtls/share/java/jdtls/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar"),
+    '-jar', vim.fn.glob(home .. "/dev/jdtls/share/java/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar"),
 
     -- The configuration for jdtls is also placed where jdtls was installed. This will
     -- need to be updated depending on your environment
