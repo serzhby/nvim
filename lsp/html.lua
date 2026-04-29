@@ -1,6 +1,6 @@
 return {
   cmd = { "vscode-html-language-server", "--stdio" },
-  filetypes = { "html", "templ" },
+  filetypes = { "html" },
   init_options = {
     provideFormatter = true,
   },

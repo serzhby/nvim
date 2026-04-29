@@ -7,7 +7,7 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
-vim.opt.smartindent = true
+vim.opt.cindent = true
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -61,6 +61,7 @@ vim.cmd([[
   command Jq %!jq .
   command Gwc w | Gwrite | Git commit
   command Gconfig w | Gwrite | Git commit -m "feat(mx): config." | Git pull --rebase | Git push
+  command Gdeploy w | Gwrite | Git commit -m "feat(es): deploy." | Git pull --rebase | Git push
 ]])
 
 vim.api.nvim_create_autocmd("FileType", {

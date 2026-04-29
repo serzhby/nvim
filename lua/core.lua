@@ -5,8 +5,20 @@ return {
     opts = {
       pickers = {
         find_files = {
-          hidden = false
-        }
+          hidden = true,
+          find_command = {
+            "rg",
+            "--files",
+            "--hidden",
+            "--glob",
+            "!**/.git/*",
+          },
+        },
+        live_grep = {
+          additional_args = function()
+            return { "--hidden", "--glob", "!**/.git/*" }
+          end,
+        },
       }
     }
   },
@@ -15,24 +27,24 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     lazy = false,
-    config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = {
-          "c", "lua", "vim", "vimdoc", "query", "java", "kotlin", "yaml", "http", "json", "graphql", "norg", "toml", "python", "bash", "regex", "markdown", "sql"
-        },
-        sync_install = false,
-        auto_install = false,
-        highlight = {
-          enable = true,
-          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    branch = 'main',
+    opts = {
+      ensure_installed = {
+        "c", "lua", "vim", "vimdoc", "query", "java", "kotlin", "yaml", "http", "json", "graphql", "norg", "toml", "python", "bash", "regex", "markdown", "sql"
+      },
+      sync_install = false,
+      auto_install = false,
+      highlight = {
+        enable = true,
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
           -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
           -- Using this option may slow down your editor, and you may see some duplicate highlights.
           -- Instead of true it can also be a list of languages
           additional_vim_regex_highlighting = false,
-        },
-      }
-    end
+      },
+    }
   },
+
   {
     'mbbill/undotree',
     lazy = false,
@@ -60,7 +72,7 @@ return {
     "rest-nvim/rest.nvim",
     lazy = true,
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
+      { "nvim-treesitter/nvim-treesitter", branch = "main"},
       "j-hui/fidget.nvim",
       "nvim-neotest/nvim-nio",
       opts = function (_, opts)
@@ -75,41 +87,41 @@ return {
       { "nvim-telescope/telescope.nvim" },
     }
   },
-  {
-    "PedramNavid/dbtpal",
-    lazy = true,
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
-    },
-    ft = {
-        "sql",
-        "md",
-        "yaml",
-    },
-    keys = {
-        { "<leader>drf", "<cmd>DbtRun<cr>" },
-        { "<leader>drp", "<cmd>DbtRunAll<cr>" },
-        { "<leader>dtf", "<cmd>DbtTest<cr>" },
-        { "<leader>dm", "<cmd>lua require('dbtpal.telescope').dbt_picker()<cr>" },
-    },
-    config = function()
-        require("dbtpal").setup({
-            path_to_dbt = "dbt",
-            path_to_dbt_project = "",
-            path_to_dbt_profiles_dir = vim.fn.expand("~/.dbt"),
-            include_profiles_dir = true,
-            include_project_dir = true,
-            include_log_level = true,
-            extended_path_search = true,
-            protect_compiled_files = true,
-            pre_cmd_args = {},
-            post_cmd_args = {},
-        })
-        require("telescope").load_extension("dbtpal")
-    end,
-  },
-
+  -- {
+  --   "PedramNavid/dbtpal",
+  --   lazy = true,
+  --   dependencies = {
+  --       "nvim-lua/plenary.nvim",
+  --       "nvim-telescope/telescope.nvim",
+  --   },
+  --   ft = {
+  --       "sql",
+  --       "md",
+  --       "yaml",
+  --   },
+  --   keys = {
+  --       { "<leader>drf", "<cmd>DbtRun<cr>" },
+  --       { "<leader>drp", "<cmd>DbtRunAll<cr>" },
+  --       { "<leader>dtf", "<cmd>DbtTest<cr>" },
+  --       { "<leader>dm", "<cmd>lua require('dbtpal.telescope').dbt_picker()<cr>" },
+  --   },
+  --   config = function()
+  --       require("dbtpal").setup({
+  --           path_to_dbt = "dbt",
+  --           path_to_dbt_project = "",
+  --           path_to_dbt_profiles_dir = vim.fn.expand("~/.dbt"),
+  --           include_profiles_dir = true,
+  --           include_project_dir = true,
+  --           include_log_level = true,
+  --           extended_path_search = true,
+  --           protect_compiled_files = true,
+  --           pre_cmd_args = {},
+  --           post_cmd_args = {},
+  --       })
+  --       require("telescope").load_extension("dbtpal")
+  --   end,
+  -- },
+  --
   --{
   --  'akinsho/toggleterm.nvim',
   --  version = "*",
@@ -176,7 +188,10 @@ return {
 
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = { 
+      { 'nvim-treesitter/nvim-treesitter', branch = 'main' }, 
+      'nvim-tree/nvim-web-devicons' 
+    },
     opts = {
       completions = {
         lsp = {
@@ -184,7 +199,7 @@ return {
         }
       }
     },
-    ft = { 'markdown', 'md', 'codecompanion' },
+    ft = { 'markdown', 'md', 'codecompanion', 'Avante' },
   },
   {
     'echasnovski/mini.nvim',

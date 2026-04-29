@@ -46,6 +46,7 @@ return {
   {
     "github/copilot.vim"
   },
+
   {
     "yetone/avante.nvim",
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -60,29 +61,32 @@ return {
     opts = {
       -- add any opts here
       -- this file can contain specific instructions for your project
-      instructions_file = "AGENTS.md",
+      instructions_file = "CLAUDE.md",
       -- for example
-      provider = "copilot",
-      -- providers = {
-      --   claude = {
-      --     endpoint = "https://api.anthropic.com",
-      --     model = "claude-sonnet-4-20250514",
-      --     timeout = 30000, -- Timeout in milliseconds
-      --     extra_request_body = {
-      --       temperature = 0.75,
-      --       max_tokens = 20480,
-      --     },
-      --   },
-      --   moonshot = {
-      --     endpoint = "https://api.moonshot.ai/v1",
-      --     model = "kimi-k2-0711-preview",
-      --     timeout = 30000, -- Timeout in milliseconds
-      --     extra_request_body = {
-      --       temperature = 0.75,
-      --       max_tokens = 32768,
-      --     },
-      --   },
-      -- },
+      -- provider = "copilot",
+      provider = "opencode",
+      acp_providers = {
+        ["opencode"] = {
+          command = "opencode",
+          args = { "acp" }
+        }
+      },
+      providers = {
+        copilot = {
+          model = "claude-sonnet-4.6", -- change to the Copilot model you want
+        },
+      },
+      input = {
+        provider = "snacks",
+        provider_opts = {
+          title = "Avante Input",
+          placeholder = "Type your input here..."
+        }
+      },
+      selector = {
+        provider = "telescope",
+        provider_opts = {}
+      }
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -92,7 +96,7 @@ return {
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
       "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "stevearc/dressing.nvim", -- for input provider dressing
+      -- "stevearc/dressing.nvim", -- for input provider dressing
       "folke/snacks.nvim", -- for input provider snacks
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       "zbirenbaum/copilot.lua", -- for providers='copilot'
@@ -123,4 +127,5 @@ return {
       },
     },
   }
+
 }

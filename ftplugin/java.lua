@@ -12,41 +12,93 @@ local root_dir = require('jdtls.setup').find_root(root_markers)
 -- current project found using the root_marker as the folder for project specific data.
 local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
 
--- Helper function for creating keymaps
-function nnoremap(rhs, lhs, bufopts, desc)
-  bufopts.desc = desc
-  vim.keymap.set("n", rhs, lhs, bufopts)
+-- On NixOS the jdtls installation is read-only (Nix store). The -configuration
+-- directory must be writable, so we copy it to a local path. To avoid copying on
+-- every buffer open, we compare an md5 checksum of the source config.ini and only
+-- re-copy when it has changed (i.e. after a Nix jdtls update).
+local jdtls_config_source = home .. "/dev/jdtls/share/java/jdtls/config_linux"
+local jdtls_config_dir = home .. "/.local/share/eclipse/jdtls-config"
+local checksum_file = jdtls_config_dir .. "/.config_checksum"
+
+local function get_source_checksum()
+  local handle = io.popen("md5sum '" .. jdtls_config_source .. "/config.ini' 2>/dev/null")
+  if not handle then return nil end
+  local result = handle:read("*a")
+  handle:close()
+  return result:match("^(%S+)")
 end
 
+local function get_stored_checksum()
+  local f = io.open(checksum_file, "r")
+  if not f then return nil end
+  local checksum = f:read("*l")
+  f:close()
+  return checksum
+end
+
+local function sync_jdtls_config()
+  local source_checksum = get_source_checksum()
+  if not source_checksum then
+    vim.notify("jdtls: could not checksum source config", vim.log.levels.WARN)
+    return
+  end
+
+  local stored_checksum = get_stored_checksum()
+  if source_checksum == stored_checksum then
+    return
+  end
+
+  -- chmod first: Nix store copies are read-only, rm -rf would fail without it
+  os.execute("chmod -R u+w '" .. jdtls_config_dir .. "' 2>/dev/null")
+  os.execute("rm -rf '" .. jdtls_config_dir .. "'")
+  os.execute("mkdir -p '" .. jdtls_config_dir .. "'")
+  os.execute("cp -r '" .. jdtls_config_source .. "/.' '" .. jdtls_config_dir .. "'")
+  os.execute("chmod -R u+w '" .. jdtls_config_dir .. "'")
+
+  local f = io.open(checksum_file, "w")
+  if f then
+    f:write(source_checksum .. "\n")
+    f:close()
+  end
+end
+
+sync_jdtls_config()
+
+-- Helper function for creating keymaps
+-- function nnoremap(rhs, lhs, bufopts, desc)
+--   bufopts.desc = desc
+--   vim.keymap.set("n", rhs, lhs, bufopts)
+-- end
+--
 -- The on_attach function is used to set key maps after the language server
 -- attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Regular Neovim LSP client keymappings
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  nnoremap('gD', vim.lsp.buf.declaration, bufopts, "Go to declaration")
-  nnoremap('gd', vim.lsp.buf.definition, bufopts, "Go to definition")
-  nnoremap('gi', vim.lsp.buf.implementation, bufopts, "Go to implementation")
-  nnoremap('K', vim.lsp.buf.hover, bufopts, "Hover text")
-  nnoremap('<C-k>', vim.lsp.buf.signature_help, bufopts, "Show signature")
-  nnoremap('<space>wa', vim.lsp.buf.add_workspace_folder, bufopts, "Add workspace folder")
-  nnoremap('<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts, "Remove workspace folder")
-  nnoremap('<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts, "List workspace folders")
-  nnoremap('<space>D', vim.lsp.buf.type_definition, bufopts, "Go to type definition")
-  nnoremap('<space>rn', vim.lsp.buf.rename, bufopts, "Rename")
-  nnoremap('<space>ca', vim.lsp.buf.code_action, bufopts, "Code actions")
-  vim.keymap.set('v', "<space>ca", "<ESC><CMD>lua vim.lsp.buf.range_code_action()<CR>",
-    { noremap=true, silent=true, buffer=bufnr, desc = "Code actions" })
-  nnoremap('<space>f', function() vim.lsp.buf.format { async = true } end, bufopts, "Format file")
-
-  -- Java extensions provided by jdtls
-  nnoremap("<C-o>", jdtls.organize_imports, bufopts, "Organize imports")
-  nnoremap("<space>ev", jdtls.extract_variable, bufopts, "Extract variable")
-  nnoremap("<space>ec", jdtls.extract_constant, bufopts, "Extract constant")
-  vim.keymap.set('v', "<space>em", [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-    { noremap=true, silent=true, buffer=bufnr, desc = "Extract method" })
-end
+-- local on_attach = function(client, bufnr)
+--   -- Regular Neovim LSP client keymappings
+--   local bufopts = { noremap=true, silent=true, buffer=bufnr }
+--   nnoremap('gD', vim.lsp.buf.declaration, bufopts, "Go to declaration")
+--   nnoremap('gd', vim.lsp.buf.definition, bufopts, "Go to definition")
+--   nnoremap('gi', vim.lsp.buf.implementation, bufopts, "Go to implementation")
+--   nnoremap('K', vim.lsp.buf.hover, bufopts, "Hover text")
+--   nnoremap('<C-k>', vim.lsp.buf.signature_help, bufopts, "Show signature")
+--   nnoremap('<space>wa', vim.lsp.buf.add_workspace_folder, bufopts, "Add workspace folder")
+--   nnoremap('<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts, "Remove workspace folder")
+--   nnoremap('<space>wl', function()
+--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+--   end, bufopts, "List workspace folders")
+--   nnoremap('<space>D', vim.lsp.buf.type_definition, bufopts, "Go to type definition")
+--   nnoremap('<space>rn', vim.lsp.buf.rename, bufopts, "Rename")
+--   nnoremap('<space>ca', vim.lsp.buf.code_action, bufopts, "Code actions")
+--   vim.keymap.set('v', "<space>ca", "<ESC><CMD>lua vim.lsp.buf.range_code_action()<CR>",
+--     { noremap=true, silent=true, buffer=bufnr, desc = "Code actions" })
+--   nnoremap('<space>f', function() vim.lsp.buf.format { async = true } end, bufopts, "Format file")
+--
+--   -- Java extensions provided by jdtls
+--   nnoremap("<C-o>", jdtls.organize_imports, bufopts, "Organize imports")
+--   nnoremap("<space>ev", jdtls.extract_variable, bufopts, "Extract variable")
+--   nnoremap("<space>ec", jdtls.extract_constant, bufopts, "Extract constant")
+--   vim.keymap.set('v', "<space>em", [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
+--     { noremap=true, silent=true, buffer=bufnr, desc = "Extract method" })
+-- end
 
 local config = {
   flags = {
@@ -135,19 +187,19 @@ local config = {
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
     '-Xmx4g',
-    '--add-modules=ALL-SYSTEM',
-    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+    -- '--add-modules=ALL-SYSTEM',
+    -- '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+    -- '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
     -- If you use lombok, download the lombok jar and place it in ~/.local/share/eclipse
     -- '-javaagent:' .. home .. '/.local/share/eclipse/lombok.jar',
 
     -- The jar file is located where jdtls was installed. This will need to be updated
     -- to the location where you installed jdtls
-    '-jar', vim.fn.glob(home .. "/dev/jdtls/share/java/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar"),
+    '-jar', vim.fn.glob(home .. "/dev/jdtls/share/java/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
 
     -- The configuration for jdtls is also placed where jdtls was installed. This will
     -- need to be updated depending on your environment
-    '-configuration', home .. "/dev/jdtls-config",
+    '-configuration', jdtls_config_dir,
 
     -- Use the workspace_folder defined above to store data for this project
     '-data', workspace_folder,

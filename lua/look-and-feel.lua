@@ -35,6 +35,7 @@ return {
   --    vim.cmd([[colorscheme catppuccin]])
   --  end,
   --},
+
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -56,6 +57,24 @@ return {
       },
     },
   },
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      input = {
+        enabled = true
+      },
+      select = {
+        enabled = true
+      },
+      indent = {
+        enabled = true
+      }
+    }
+  },
+
   {
     'nvim-tree/nvim-web-devicons',
     lazy = true,
@@ -224,40 +243,81 @@ return {
       },
     }
   },
-  -- {
-  --   "rcarriga/nvim-notify",
-  --   opts = {
-  --     background_colour = "#000000",
-  --   }
-  -- },
-  -- {
-  --   "folke/noice.nvim",
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-  --     "MunifTanjim/nui.nvim",
-  --     -- OPTIONAL:
-  --     --   `nvim-notify` is only needed, if you want to use the notification view.
-  --     --   If not available, we use `mini` as the fallback
-  --     "rcarriga/nvim-notify",
-  --   },
-  --   opts = {
-  --     lsp = {
-  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-  --       override = {
-  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-  --         ["vim.lsp.util.stylize_markdown"] = true,
-  --         ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-  --       },
-  --     },
-  --     -- you can enable a preset for easier configuration
-  --     presets = {
-  --       bottom_search = true, -- use a classic bottom cmdline for search
-  --       command_palette = true, -- position the cmdline and popupmenu together
-  --       long_message_to_split = true, -- long messages will be sent to a split
-  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
-  --       lsp_doc_border = false, -- add a border to hover docs and signature help
-  --     },
-  --   }
-  -- }
-};
+
+  {
+    "karb94/neoscroll.nvim",
+    config = function()
+      local neoscroll = require('neoscroll')
+      neoscroll.setup({
+        hide_cursor = false,          -- Hide cursor while scrolling
+        stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+        respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+        duration_multiplier = 0.6,   -- Global duration multiplier
+        easing = 'linear',           -- Default easing function
+        pre_hook = nil,              -- Function to run before the scrolling animation starts
+        post_hook = function(info)
+          if info == "zz" then
+            vim.schedule(function() vim.cmd("normal zz") end, 10)
+          end
+        end,
+        performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+        ignored_events = {           -- Events ignored while scrolling
+          'WinScrolled', 'CursorMoved'
+        },
+      })
+      local keymap = {
+        ["<C-u>"] = function() neoscroll.ctrl_u({ duration = 200; info = 'zz' }) end;
+        ["<C-d>"] = function() neoscroll.ctrl_d({ duration = 200; info = 'zz' }) end;
+        ["<C-b>"] = function() neoscroll.ctrl_b({ duration = 400 }) end;
+        ["<C-f>"] = function() neoscroll.ctrl_f({ duration = 400 }) end;
+        ["<C-y>"] = function() neoscroll.scroll(-0.1, { move_cursor=false; duration = 100 }) end;
+        ["<C-e>"] = function() neoscroll.scroll(0.1, { move_cursor=false; duration = 100 }) end;
+        ["zt"]    = function() neoscroll.zt({ half_win_duration = 200 }) end;
+        ["zz"]    = function() neoscroll.zz({ half_win_duration = 200 }) end;
+        ["zb"]    = function() neoscroll.zb({ half_win_duration = 200 }) end;
+      }
+      local modes = { 'n', 'v', 'x' }
+      for key, func in pairs(keymap) do
+        vim.keymap.set(modes, key, func)
+      end
+    end
+  }
+
+    -- {
+      --   "rcarriga/nvim-notify",
+      --   opts = {
+        --     background_colour = "#000000",
+        --   }
+        -- },
+        -- {
+          --   "folke/noice.nvim",
+          --   event = "VeryLazy",
+          --   dependencies = {
+            --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            --     "MunifTanjim/nui.nvim",
+            --     -- OPTIONAL:
+            --     --   `nvim-notify` is only needed, if you want to use the notification view.
+            --     --   If not available, we use `mini` as the fallback
+            --     "rcarriga/nvim-notify",
+            --   },
+            --   opts = {
+              --     lsp = {
+                --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                --       override = {
+                  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                  --         ["vim.lsp.util.stylize_markdown"] = true,
+                  --         ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                  --       },
+                  --     },
+                  --     -- you can enable a preset for easier configuration
+                  --     presets = {
+                    --       bottom_search = true, -- use a classic bottom cmdline for search
+                    --       command_palette = true, -- position the cmdline and popupmenu together
+                    --       long_message_to_split = true, -- long messages will be sent to a split
+                    --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    --       lsp_doc_border = false, -- add a border to hover docs and signature help
+                    --     },
+                    --   }
+                    -- }
+                  };
