@@ -28,21 +28,29 @@ return {
     build = ':TSUpdate',
     lazy = false,
     branch = 'main',
-    opts = {
-      ensure_installed = {
-        "c", "lua", "vim", "vimdoc", "query", "java", "kotlin", "yaml", "http", "json", "graphql", "norg", "toml", "python", "bash", "regex", "markdown", "sql"
-      },
-      sync_install = false,
-      auto_install = false,
-      highlight = {
-        enable = true,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-          -- Using this option may slow down your editor, and you may see some duplicate highlights.
-          -- Instead of true it can also be a list of languages
-          additional_vim_regex_highlighting = false,
-      },
-    }
+    config = function()
+      require('nvim-treesitter').setup()
+
+      local parsers = {
+        'c', 'lua', 'vim', 'vimdoc', 'query', 'java', 'kotlin',
+        'yaml', 'http', 'json', 'graphql', 'toml',
+        'python', 'bash', 'regex', 'markdown', 'sql',
+      }
+      require('nvim-treesitter').install(parsers)
+
+      -- vimdoc parser handles the `help` filetype.
+      local filetypes = {
+        'c', 'lua', 'vim', 'help', 'query', 'java', 'kotlin',
+        'yaml', 'http', 'json', 'graphql', 'toml',
+        'python', 'bash', 'regex', 'markdown', 'sql',
+      }
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = filetypes,
+        callback = function()
+          pcall(vim.treesitter.start)
+        end,
+      })
+    end,
   },
 
   {

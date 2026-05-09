@@ -43,9 +43,9 @@ return {
   --     },
   --   }
   -- },
-  {
-    "github/copilot.vim"
-  },
+  -- {
+  --   "github/copilot.vim"
+  -- },
 
   {
     "yetone/avante.nvim",
@@ -64,7 +64,11 @@ return {
       instructions_file = "CLAUDE.md",
       -- for example
       -- provider = "copilot",
-      provider = "opencode",
+      provider = "copilot",
+      auto_suggestions_provider = "copilot",
+      behaviour = {
+        auto_suggestions = true,
+      },
       acp_providers = {
         ["opencode"] = {
           command = "opencode",
@@ -73,8 +77,25 @@ return {
       },
       providers = {
         copilot = {
-          model = "claude-sonnet-4.6", -- change to the Copilot model you want
+          model = "claude-sonnet-4.6",
         },
+        litellm = {
+          __inherited_from = "openai",
+          endpoint = "https://litellm.idfaws.com",
+          model = "gpt-5.4", -- also: gpt-5.4-mini, gpt-5.2, gpt-5.4-nano, chat-gpt-5.4, gpt-5-mini, chat-gpt-5.2
+          api_key_name = "LITELLM_API_KEY",
+          is_env_set = function() return os.getenv("LITELLM_API_KEY") ~= nil end,
+        },
+        -- ollama = {
+        --   endpoint = "https://ai.serzh.by",
+        --   model = "qwen-coder-7b-custom",
+        --   
+        --   is_env_set = function() return true end,
+        --   -- is_env_set = function() return require("avante.providers.ollama").check_endpoint_alive() end,
+        --   extra_headers = {
+        --     ["Authorization"] = "Basic " .. (os.getenv("OLLAMA_AUTH") or ""),
+        --   },
+        -- },
       },
       input = {
         provider = "snacks",
