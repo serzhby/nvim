@@ -19,7 +19,7 @@ local combined = combine(
   require("core"),
   require("look-and-feel"),
   require("git"),
-  require("database"),
+  -- require("database"),
   require("files"),
   -- require("neorg-notes"),
   require("code-assistant")
