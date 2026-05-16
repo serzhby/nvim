@@ -1,8 +1,4 @@
--- vim.cmd - execute Vim commands vim.api.nvim_exec - execute Vimscript
--- vim.g - global variables
--- vim.opt - global/buffer/windows-scoped options
 vim.g.mapleader = ' '
--- vim.cmd([[syntax enable]])
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -53,8 +49,6 @@ vim.o.background = "dark"
 -- set transparent background
 vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg ="none" })
-
--- vim.g.db_ui_save_location = "/home/sergey/.config/nvim/db_ui"
 
 vim.cmd([[
   command Gpush Git pull --rebase | Git push
