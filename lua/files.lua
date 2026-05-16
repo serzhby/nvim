@@ -1,6 +1,9 @@
 return {
   {
     "stevearc/oil.nvim",
+    keys = {
+      { "<leader>-", "<cmd>Oil<CR>", desc = "Open Oil" },
+    },
     opts = {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
       -- Set to false if you still want to use netrw.
@@ -229,6 +232,10 @@ return {
       "nvim-tree/nvim-web-devicons", -- optional, but recommended
     },
     lazy = false, -- neo-tree will lazily load itself
+    keys = {
+      { "<leader>ntt", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", silent = true },
+      { "<leader>ntf", "<cmd>Neotree focus<CR>",  desc = "Focus Neotree",  silent = true },
+    },
     opts = {
       filesystem = {
         window = {

@@ -3,7 +3,35 @@ return {
     'lewis6991/gitsigns.nvim'
   },
   {
-    'tpope/vim-fugitive'
+    'tpope/vim-fugitive',
+    keys = {
+      {
+        "<leader>gl",
+        function()
+          local s = vim.fn.line("'<")
+          local e = vim.fn.line("'>")
+          vim.cmd(string.format("Gclog -L%d,%d:%%", s, e))
+          vim.cmd("copen")
+        end,
+        mode = "x",
+        desc = "Git history for selection (Fugitive)",
+      },
+      {
+        "<leader>gd",
+        function()
+          if vim.wo.diff then
+            vim.cmd('diffoff!')
+            vim.cmd('only')
+          else
+            local ok, _ = pcall(vim.cmd, 'Gvdiffsplit')
+            if not ok then
+              vim.cmd('diffthis')
+            end
+          end
+        end,
+        desc = "Toggle Git diff view",
+      },
+    },
   },
   {
     'idanarye/vim-merginal'
@@ -35,9 +63,17 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons',
     },
+    keys = {
+      { "<leader>gpl", "<cmd>Octo pr list<CR>", desc = "Octo: list PRs" },
+    },
     opts = {}
   },
   {
-    'sindrets/diffview.nvim'
+    'sindrets/diffview.nvim',
+    keys = {
+      { "<leader>dvo", "<cmd>DiffviewOpen<CR>",          desc = "Diffview: open" },
+      { "<leader>dvh", "<cmd>DiffviewFileHistory %<CR>", desc = "Diffview: file history" },
+      { "<leader>dvc", "<cmd>DiffviewClose<CR>",         desc = "Diffview: close" },
+    },
   }
 }

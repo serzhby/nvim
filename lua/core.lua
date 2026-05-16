@@ -2,6 +2,13 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { "<leader>f", "<cmd>Telescope live_grep<cr>",  desc = "Telescope live grep" },
+      { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Telescope find files" },
+      { "<leader>e", "<cmd>Telescope oldfiles<CR>",   desc = "Telescope oldfiles",   silent = true },
+      { "<leader>b", "<cmd>Telescope buffers<CR>",    desc = "Telescope buffers" },
+      { "<leader>h", "<cmd>Telescope help_tags<CR>",  desc = "Telescope help tags" },
+    },
     opts = {
       pickers = {
         find_files = {
@@ -56,6 +63,9 @@ return {
   {
     'mbbill/undotree',
     lazy = false,
+    keys = {
+      { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
+    },
     config = function()
       vim.opt.undofile = true
 
@@ -79,6 +89,15 @@ return {
   {
     "rest-nvim/rest.nvim",
     lazy = true,
+    keys = {
+      {
+        "<leader>re",
+        function() require('telescope').extensions.rest.select_env() end,
+        desc = "Select rest.nvim environment",
+        silent = true,
+      },
+      { "<leader>rc", "<cmd>Rest cookies<CR>", desc = "Rest cookies", silent = true },
+    },
     dependencies = {
       { "nvim-treesitter/nvim-treesitter", branch = "main"},
       "j-hui/fidget.nvim",
@@ -91,6 +110,14 @@ return {
   },
   {
     "jemag/telescope-diff.nvim",
+    keys = {
+      {
+        "<leader>dc",
+        function() require('telescope').extensions.diff.diff_current({ hidden = true }) end,
+        desc = "Compare current file with another",
+        silent = true,
+      },
+    },
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
     }

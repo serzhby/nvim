@@ -1,62 +1,11 @@
--- vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<cr>")
-vim.keymap.set("n", "<leader>f", "<cmd>Telescope live_grep<cr>")
-vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
-vim.keymap.set("n", "<leader>e", "<cmd>Telescope oldfiles<CR>", {noremap=true, silent=true})
-vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>h", "<cmd>Telescope help_tags<CR>", {noremap=true})
 vim.keymap.set("x", "<leader>p", "\"_dP")
--- vim.keymap.set("n", "<C-d>", "<C-d>zz")
--- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<leader>o", "o<Esc>k")
 vim.keymap.set("n", "<leader>O", "O<Esc>j")
--- vim.keymap.set("n", "<leader>e", [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>m", "<cmd>messages<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>re", [[<cmd>lua require('telescope').extensions.rest.select_env()<CR>]], {noremap = true, silent = true, desc = "Select rest.nvim environment"})
-vim.keymap.set("n", "<leader>rc", "<cmd>Rest cookies<CR>", {noremap = true, silent = true})
-vim.keymap.set("n", "<leader>dc", [[<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<CR>]], {noremap = true, silent = true, desc="Compare current file with another"})
--- vim.keymap.set("n", "<leader>n", "<cmd>NvimTreeOpen<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>-", "<cmd>Oil<CR>", {noremap=true})
---vim.keymap.set("n", "<leader>rr", "<cmd>Rest run<CR>", {noremap=true})
--- vim.keymap.set("n", "<leader>re", [[<cmd>lua require('telescope').extensions.rest.select_env()<CR>]], {noremap=true})
--- vim.keymap.set("n", "<leader>r", "<cmd>Http<CR>", {noremap=true})
--- vim.keymap.set("n", "<leader>r", "<cmd>Ij<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>gpl", "<cmd>Octo pr list<CR>", {noremap=true})
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", {noremap=true})
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>at", "<cmd>CodeCompanionChat Toggle<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionActions<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", {noremap=true})
-vim.keymap.set("x", "<leader>gl", function()
-  local s = vim.fn.line("'<")
-  local e = vim.fn.line("'>")
-  -- % = current file
-  vim.cmd(string.format("Gclog -L%d,%d:%%", s, e))
-  -- optional: open quickfix list with the commits
-  vim.cmd("copen")
-end, { desc = "Git history for selection (Fugitive)" })
-vim.keymap.set("n", "<leader>ntt", "<cmd>Neotree toggle<CR>", {noremap=true, silent=true, desc="Toggle Neotree"})
-vim.keymap.set("n", "<leader>ntf", "<cmd>Neotree focus<CR>", {noremap=true, silent=true, desc="Focus Neotree"})
-vim.keymap.set("n", "<leader>dvo", "<cmd>DiffviewOpen<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>dvh", "<cmd>DiffviewFileHistory %<CR>", {noremap=true})
-vim.keymap.set("n", "<leader>dvc", "<cmd>DiffviewClose<CR>", {noremap=true})
 
 --vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", {noremap=true})
---
-vim.keymap.set('n', '<leader>gd', function()
-  if vim.wo.diff then
-    -- Turn off diff mode in all windows
-    vim.cmd('diffoff!')
-    vim.cmd('only')
-  else
-    -- Start fugitive diff split (if available)
-    local ok, _ = pcall(vim.cmd, 'Gvdiffsplit')
-    if not ok then
-      -- Fallback: enable diff mode manually
-      vim.cmd('diffthis')
-    end
-  end
-end, { desc = 'Toggle Git diff view' })
 
 local function run_file()
   local ft = vim.bo.filetype -- Get the file type of the current buffer
