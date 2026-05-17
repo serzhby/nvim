@@ -77,7 +77,7 @@ return {
 
   {
     'nvim-tree/nvim-web-devicons',
-    lazy = true,
+    lazy = false,
     opts = {
       -- your personnal icons can go here (to override)
       -- you can specify color or cterm_color instead of specifying both of them

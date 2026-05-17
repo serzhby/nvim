@@ -1,6 +1,7 @@
 return {
   {
-    'lewis6991/gitsigns.nvim'
+    'lewis6991/gitsigns.nvim',
+    event = { "BufReadPre", "BufNewFile" },
   },
   {
     'tpope/vim-fugitive',
