@@ -10,14 +10,15 @@ Leader key is `<Space>`.
 
 ## Layout & how plugin specs are organized
 
-- `init.lua` — options, lazy.nvim bootstrap, a few global commands/autocmds, transparent-background highlight tweaks.
-- `lua/plugins.lua` — does **not** declare plugins itself. It `require`s the category files below and flattens their returned lists via a local `combine()` helper before passing to `lazy.setup`. To add a plugin, append a spec to whichever category file fits; don't create new top-level files unless you also wire them into `combine(...)` in `lua/plugins.lua`.
-  - `lua/core.lua` — telescope, treesitter, undotree, dap, jdtls, spectre, trouble, mini.\*, rest.nvim, etc.
+- `init.lua` — options, lazy.nvim bootstrap, a few global commands/autocmds, transparent-background highlight tweaks. Ends with the call `require("plugins").setup({ ... })` whose argument **is the list of active plugin groups** — to enable/disable a category, edit this list.
+- `lua/plugins.lua` — exposes `setup(groups)`. It `require`s each group name, flattens their returned spec lists via a local `combine()` helper, and passes the result to `lazy.setup`. It does **not** itself decide which groups are active — that lives in `init.lua`. To add a plugin, append a spec to whichever group file fits; only create a new group file if you also add its name to the list in `init.lua`.
+  - `lua/core.lua` — telescope, treesitter, undotree, dap, jdtls, spectre, trouble, mini.\*, etc.
   - `lua/look-and-feel.lua` — colorscheme (gruvbox), lualine, which-key, snacks, ufo, neoscroll, mini.comment, devicons.
   - `lua/git.lua` — fugitive, gitsigns, lazygit, octo, diffview, merginal.
   - `lua/files.lua` — oil, yazi, neo-tree.
   - `lua/code-assistant.lua` — codecompanion, copilot.vim. (`avante.nvim` block is intentionally commented out as a fallback reference.)
-  - `lua/database.lua`, `lua/neorg-notes.lua` — present but commented out in `lua/plugins.lua`; un-comment in `combine(...)` to enable.
+  - `lua/http.lua` — rest.nvim (and its dependencies). Pinned to treesitter `main`; see Treesitter section below.
+  - `lua/database.lua`, `lua/neorg-notes.lua` — present on disk but **not** in `init.lua`'s active-groups list; add their names there to enable.
 - `lua/keymaps.lua` — non-plugin keymaps only. Plugin keymaps live in each plugin's `keys = { ... }` spec (this was a deliberate refactor — see commit `238b0de`). Don't move keymaps back here.
 - `plugin/globals.lua` — defines `P()` as a `vim.inspect`-print helper used during debugging.
 - `ftdetect/policy2.vim` — maps `*.policy2`, `*.scoring`, `*.flow`, `*.product` to `groovy` (these are work-specific ID Finance file types).
@@ -42,7 +43,7 @@ Completion is wired by the `LspAttach` autocmd in `after/plugin/lsp.lua` using `
 
 ## Treesitter
 
-Pinned to the **`main` branch**, not `master` (see `lua/core.lua`). This uses the new install API (`require('nvim-treesitter').install(parsers)` + manual `vim.treesitter.start` on `FileType`). Any plugin spec that depends on treesitter must also pin `branch = "main"` — `rest.nvim` and `render-markdown.nvim` already do this. Don't switch back to `master`.
+Pinned to the **`main` branch**, not `master` (see `lua/core.lua`). This uses the new install API (`require('nvim-treesitter').install(parsers)` + manual `vim.treesitter.start` on `FileType`). Any plugin spec that depends on treesitter must also pin `branch = "main"` — `rest.nvim` (in `lua/http.lua`) and `render-markdown.nvim` already do this. Don't switch back to `master`.
 
 ## Code assistant (CodeCompanion)
 
