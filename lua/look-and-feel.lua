@@ -125,32 +125,25 @@ return {
     'kevinhwang91/nvim-ufo',
     dependencies = {'kevinhwang91/promise-async'},
     config = function()
-      vim.o.foldcolumn = '1' -- '0' is not bad
-      vim.o.foldlevel = 999 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevel = 999
       vim.o.foldlevelstart = 999
       vim.o.foldenable = true
-      vim.o.foldcolumn = 'auto:9'
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep:│,foldclose:]]
+      vim.o.foldcolumn = '1'
+      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldinner: ,foldclose:]]
 
-      -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-      vim.keymap.set('n', '<leader>zz', require('ufo').setup)
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true
-      }
-      local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
-      for _, ls in ipairs(language_servers) do
-          require('lspconfig')[ls].setup({
-              capabilities = capabilities
-              -- you can add other fields for setting up lsp server in this table
-          })
-      end
+      vim.lsp.config('*', {
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        },
+      })
 
-      -- require('ufo').setup()
+      require('ufo').setup()
     end
   },
 
@@ -203,44 +196,6 @@ return {
       winbar = {},
       inactive_winbar = {},
       extensions = {}
-    }
-  },
-
-  {
-    'nvim-mini/mini.comment',
-    version = false ,
-    opts = {
-      -- Options which control module behavior
-      options = {
-        -- Function to compute custom 'commentstring' (optional)
-        custom_commentstring = nil,
-        -- Whether to ignore blank lines when commenting
-        ignore_blank_line = false,
-        -- Whether to ignore blank lines in actions and textobject
-        start_of_line = false,
-        -- Whether to force single space inner padding for comment parts
-        pad_comment_parts = true,
-      },
-      -- Module mappings. Use `''` (empty string) to disable one.
-      mappings = {
-        -- Toggle comment (like `gcip` - comment inner paragraph) for both
-        -- Normal and Visual modes
-        comment = 'gc',
-        -- Toggle comment on current line
-        comment_line = 'gcc',
-        -- Toggle comment on visual selection
-        comment_visual = 'gc',
-        -- Define 'comment' textobject (like `dgc` - delete whole comment block)
-        -- Works also in Visual mode if mapping differs from `comment_visual`
-        textobject = 'gc',
-      },
-      -- Hook functions to be executed at certain stage of commenting
-      hooks = {
-        -- Before successful commenting. Does nothing by default.
-        pre = function() end,
-        -- After successful commenting. Does nothing by default.
-        post = function() end,
-      },
     }
   },
 

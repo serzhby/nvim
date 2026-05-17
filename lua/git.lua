@@ -35,9 +35,6 @@ return {
     },
   },
   {
-    'idanarye/vim-merginal'
-  },
-  {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {

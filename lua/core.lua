@@ -81,14 +81,6 @@ return {
   },
   { 'mfussenegger/nvim-dap' },
   { 'mfussenegger/nvim-jdtls' },
-  { 'nvim-lua/plenary.nvim' },
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    config = function()
-      require("telescope").load_extension("file_browser")
-    end,
-  },
   {
     "jemag/telescope-diff.nvim",
     keys = {
@@ -230,7 +222,6 @@ return {
     config = function()
       require('mini.snippets').setup()
       require('mini.completion').setup()
-      require('mini.diff').setup()
       require('mini.pairs').setup()
     end
   },
