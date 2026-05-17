@@ -4,19 +4,16 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.cindent = true
-
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
 vim.opt.scrolloff = 8
-
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.relativenumber = true
 vim.opt.number = true
-
 vim.opt.clipboard = 'unnamedplus'
+vim.o.background = "dark"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -31,24 +28,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("plugins")
 
 require("keymaps")
 
-vim.g.rest_nvim = {
-  ui = {
-    winbar = true
-  }
-}
-require("telescope").load_extension("rest")
-
-require("telescope").load_extension("file_browser")
-
-vim.o.background = "dark"
-
 -- set transparent background
-vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg ="none" })
+-- vim.api.nvim_set_hl(0, "Normal", { bg ="none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg ="none" })
 
 vim.cmd([[
   command Gpush Git pull --rebase | Git push
@@ -80,3 +65,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+require("plugins").setup({
+  "core",
+  "look-and-feel",
+  "git",
+  "files",
+  "code-assistant",
+  "http"
+})
