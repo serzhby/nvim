@@ -2,6 +2,7 @@ return {
   {
     "rest-nvim/rest.nvim",
     lazy = true,
+    enabled = not vim.g.is_devcontainer,
     keys = {
       {
         "<leader>re",
