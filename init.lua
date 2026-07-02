@@ -10,5 +10,7 @@ require("plugins").setup({
   "git",
   "files",
   "code-assistant",
-  "http"
+  "http",
+  "diagrams",
+  "gamedev"
 })

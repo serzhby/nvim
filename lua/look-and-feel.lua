@@ -1,13 +1,26 @@
 return {
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- load the colorscheme here
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end,
+  -- },
   {
-    'ellisonleao/gruvbox.nvim',
+    "xiantang/darcula-dark.nvim",
     lazy = false,
     priority = 1000,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
     config = function()
       -- load the colorscheme here
-      vim.cmd([[colorscheme gruvbox]])
+      vim.cmd.colorscheme("darcula-solid")
     end,
   },
+
   -- {
   --   'rebelot/kanagawa.nvim',
   --   lazy = false,

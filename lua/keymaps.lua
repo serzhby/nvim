@@ -4,6 +4,10 @@ vim.keymap.set("n", "<leader>O", "O<Esc>j")
 vim.keymap.set("n", "<leader>m", "<cmd>messages<CR>", {noremap=true})
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", {noremap=true})
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>", {noremap=true})
+vim.keymap.set("n", "<A-h>", "<cmd>vertical resize -2<CR>")
+vim.keymap.set("n", "<A-l>", "<cmd>vertical resize +2<CR>")
+vim.keymap.set("n", "<A-j>", "<cmd>resize +2<CR>")
+vim.keymap.set("n", "<A-k>", "<cmd>resize -2<CR>")
 
 local function run_file()
   local ft = vim.bo.filetype -- Get the file type of the current buffer
