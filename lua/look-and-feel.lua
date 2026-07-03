@@ -84,6 +84,9 @@ return {
       },
       indent = {
         enabled = true
+      },
+      notifier = {
+        enabled = true
       }
     }
   },

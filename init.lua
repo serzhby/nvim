@@ -12,5 +12,6 @@ require("plugins").setup({
   "code-assistant",
   "http",
   "diagrams",
-  "gamedev"
+  "gamedev",
+  "development"
 })

@@ -10,6 +10,7 @@ vim.lsp.enable("tinymist")
 vim.lsp.enable("docker")
 vim.lsp.enable("graphql")
 vim.lsp.enable("json")
+-- vim.lsp.enable("rust_analyzer")
 vim.opt.completeopt = {'menu', 'menuone', 'noinsert', 'noselect'}
 
 vim.diagnostic.config({
