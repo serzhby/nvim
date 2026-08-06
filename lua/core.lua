@@ -223,6 +223,33 @@ return {
       require('mini.snippets').setup()
       require('mini.completion').setup()
       require('mini.pairs').setup()
+
+      require('mini.splitjoin').setup()   -- gS toggles single/multi-line
+      require('mini.move').setup({        -- Shift+arrows move lines/blocks
+        -- Alt+hjkl is left to the window-resize maps in lua/keymaps.lua
+        mappings = {
+          left       = '<S-left>',
+          right      = '<S-right>',
+          down       = '<S-down>',
+          up         = '<S-up>',
+          line_left  = '<S-left>',
+          line_right = '<S-right>',
+          line_down  = '<S-down>',
+          line_up    = '<S-up>',
+        },
+      })
+      require('mini.trailspace').setup()  -- highlights trailing whitespace
+
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup({
+        highlighters = {
+          fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+          hack      = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
+          todo      = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
+          note      = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      })
     end
   },
 

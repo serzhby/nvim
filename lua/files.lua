@@ -234,13 +234,28 @@ return {
     keys = {
       { "<leader>ntt", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", silent = true },
       { "<leader>ntf", "<cmd>Neotree focus<CR>",  desc = "Focus Neotree",  silent = true },
+      { "<leader>ntr", "<cmd>Neotree reveal reveal_force_cwd<CR>", desc = "Reveal current file in Neotree", silent = true },
     },
     opts = {
       filesystem = {
+        group_empty_dirs = true,
+        scan_mode = "deep",
+        follow_current_file = {
+          enabled = true,
+          leave_dirs_open = true,
+        },
         window = {
           mappings = {
-            ["l"] = "open",
+            ["l"] = "open",           -- open the file and jump to it
             ["h"] = "close_node",
+            -- open the file but keep the cursor in the tree
+            ["<cr>"] = function(state)
+              local tree_win = vim.api.nvim_get_current_win()
+              state.commands.open(state)
+              if vim.api.nvim_win_is_valid(tree_win) then
+                vim.api.nvim_set_current_win(tree_win)
+              end
+            end,
           }
         }
       }

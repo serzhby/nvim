@@ -75,6 +75,14 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    keys = {
+      { "<leader>tt", function()
+          Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } })
+        end, desc = "Toggle terminal" },
+      { "<leader>tf", function()
+          Snacks.terminal.toggle(nil, { win = { position = "float" } })
+        end, desc = "Toggle floating terminal" },
+    },
     opts = {
       input = {
         enabled = true
@@ -86,6 +94,9 @@ return {
         enabled = true
       },
       notifier = {
+        enabled = true
+      },
+      terminal = {
         enabled = true
       }
     }
@@ -159,7 +170,36 @@ return {
         },
       })
 
-      require('ufo').setup()
+      require('ufo').setup({
+        -- fold the LSP `imports` region on open, like IntelliJ does
+        close_fold_kinds_for_ft = {
+          default = {},
+          java    = { 'imports' },
+          kotlin  = { 'imports' },
+        },
+      })
+
+      -- jdtls/kotlin-lsp often attach after the buffer is first drawn; ufo only
+      -- applies close_fold_kinds on its first scan, so re-scan once on attach.
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+          if ft ~= 'java' and ft ~= 'kotlin' then
+            return
+          end
+          vim.defer_fn(function()
+            if not vim.api.nvim_buf_is_valid(args.buf) then
+              return
+            end
+            local fold = require('ufo.fold')
+            local fb = fold.get(args.buf)
+            if fb then
+              fb.scanned = false
+              fold.update(args.buf)
+            end
+          end, 500)
+        end,
+      })
     end
   },
 
