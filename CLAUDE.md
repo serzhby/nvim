@@ -20,6 +20,7 @@ Leader key is `<Space>`.
   - `lua/http.lua` — rest.nvim (and its dependencies). Pinned to treesitter `main`; see Treesitter section below.
   - `lua/database.lua`, `lua/neorg-notes.lua` — present on disk but **not** in `init.lua`'s active-groups list; add their names there to enable.
 - `lua/keymaps.lua` — non-plugin keymaps only. Plugin keymaps live in each plugin's `keys = { ... }` spec (this was a deliberate refactor — see commit `238b0de`). Don't move keymaps back here.
+- `lua/formatters.lua` — per-filetype `equalprg`/`formatprg` via `FileType` autocmds. rest.nvim formats response bodies by running `gq` in a scratch buffer, so it needs `formatprg` (an LSP-based `formatexpr` has no client there and silently no-ops); keep `formatexpr` unset for those filetypes.
 - `plugin/globals.lua` — defines `P()` as a `vim.inspect`-print helper used during debugging.
 - `ftdetect/policy2.vim` — maps `*.policy2`, `*.scoring`, `*.flow`, `*.product` to `groovy` (these are work-specific ID Finance file types).
 - `ftplugin/java.lua` — Java/jdtls bootstrap (see below).
