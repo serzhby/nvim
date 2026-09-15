@@ -26,8 +26,15 @@ return {
             return { "--hidden", "--glob", "!**/.git/*" }
           end,
         },
+      },
+    },
+    config = function(_, opts)
+      opts.extensions = {
+        ['ui-select'] = require('telescope.themes').get_dropdown({}),
       }
-    }
+      require('telescope').setup(opts)
+      require('telescope').load_extension('ui-select')
+    end,
   },
 
   {
@@ -81,6 +88,10 @@ return {
   },
   { 'mfussenegger/nvim-dap' },
   { 'mfussenegger/nvim-jdtls' },
+  {
+    'nvim-telescope/telescope-ui-select.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+  },
   {
     "jemag/telescope-diff.nvim",
     keys = {
