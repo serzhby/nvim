@@ -3,8 +3,8 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
-      { "<leader>f", "<cmd>Telescope live_grep<cr>",  desc = "Telescope live grep" },
-      { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Telescope find files" },
+      { "<leader>f", function() require("search-scope").live_grep() end,  desc = "Live grep (scoped)" },
+      { "<leader>p", function() require("search-scope").find_files() end, desc = "Find files (scoped)" },
       { "<leader>e", "<cmd>Telescope oldfiles<CR>",   desc = "Telescope oldfiles",   silent = true },
       { "<leader>b", "<cmd>Telescope buffers<CR>",    desc = "Telescope buffers" },
       { "<leader>h", "<cmd>Telescope help_tags<CR>",  desc = "Telescope help tags" },
@@ -91,6 +91,18 @@ return {
   {
     'nvim-telescope/telescope-ui-select.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
+  },
+  { 'b0o/schemastore.nvim' },
+  {
+    'rachartier/tiny-code-action.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    event = 'LspAttach',
+    opts = {
+      picker = 'telescope',
+    },
+    keys = {
+      { "<leader>ca", function() require('tiny-code-action').code_action() end, desc = "Code actions" },
+    },
   },
   {
     "jemag/telescope-diff.nvim",

@@ -103,6 +103,22 @@ return {
   },
 
   {
+    -- LSP progress spinner (bottom-right). Must load on LspAttach: fidget
+    -- registers its LspProgress autocmd from setup(), so loading any later
+    -- would miss the progress messages we want to see.
+    "j-hui/fidget.nvim",
+    event = "LspAttach",
+    opts = {
+      progress = {
+        clear_on_detach = true,
+        display = {
+          done_ttl = 2,
+        },
+      },
+    },
+  },
+
+  {
     'nvim-tree/nvim-web-devicons',
     lazy = false,
     opts = {
@@ -234,6 +250,27 @@ return {
             "rest",
             icon = "",
             fg = "#428890"
+          },
+          {
+            function()
+              local names = {}
+              for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+                names[#names + 1] = client.name
+              end
+              return table.concat(names, ", ")
+            end,
+            icon = " LSP:",
+            cond = function()
+              return #vim.lsp.get_clients({ bufnr = 0 }) > 0
+            end,
+          },
+          {
+            function() return require("search-scope").status() end,
+            icon = "󰉋",
+            cond = function()
+              local ok, ss = pcall(require, "search-scope")
+              return ok and ss.pinned ~= nil
+            end,
           },
           'filetype'
         },

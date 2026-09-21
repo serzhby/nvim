@@ -235,6 +235,8 @@ return {
       { "<leader>ntt", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", silent = true },
       { "<leader>ntf", "<cmd>Neotree focus<CR>",  desc = "Focus Neotree",  silent = true },
       { "<leader>ntr", "<cmd>Neotree reveal reveal_force_cwd<CR>", desc = "Reveal current file in Neotree", silent = true },
+      { "<leader>nts", function() require("search-scope").pin() end,   desc = "Pin search scope to node", silent = true },
+      { "<leader>ntc", function() require("search-scope").clear() end, desc = "Clear search scope",       silent = true },
     },
     opts = {
       filesystem = {
