@@ -110,7 +110,8 @@ return {
     event = "LspAttach",
     opts = {
       progress = {
-        clear_on_detach = true,
+        -- clear_on_detach must be `false` or a fun(client_id) -> group key;
+        -- the default already clears the detaching client's group.
         display = {
           done_ttl = 2,
         },
